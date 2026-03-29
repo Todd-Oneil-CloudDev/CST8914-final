@@ -1,0 +1,113 @@
+/* ********************************SCHEDULE A CALL PAGE****************************** */
+
+.logo-home {
+    height: 5rem;
+    width: 15rem;
+}
+
+.main-nav {
+    display: flex;
+    gap: 1rem; /* optional spacing */
+    list-style: none; /* remove bullets */
+    padding: 0;
+    margin: 0;
+}
+
+.nav-link {
+    color: white;
+}
+
+#form-section {
+    display: none;
+}
+
+.form-checkboxes {
+    list-style: none;
+    width: 30rem;
+    border-style: solid;
+    border-width: 0.1rem;
+    border-color: black;
+}
+
+#event-descr {
+    height: 10rem;
+    width: 20rem;
+}
+
+#toggle-label {
+  display: block;
+  margin: 0.5em;
+  padding: 4px 4px 6px 6px;
+  border: 0 solid #005a9c;
+  border-radius: 5px;
+  width: 20rem;
+}
+
+#toggle-label .label {
+  display: inline-block;
+  width: 25rem;
+  user-select: none;
+}
+
+#toggle-label input[role="switch"] {
+  opacity: 0;
+}
+
+#toggle-label input[role="switch"] ~ .state {
+  display: inline-block;
+  user-select: none;
+}
+
+#toggle-label input[role="switch"] ~ .state > .container {
+  position: relative;
+  top: 2px;
+  display: inline-block;
+  border: 2px solid black;
+  width: 2.5rem;
+  height: 20px;
+  border-radius: 11px;
+}
+
+#toggle-label input[role="switch"] ~ .state > .container > .position {
+  position: relative;
+  right: 0.83rem;
+  bottom: 0.16rem;
+  display: inline-block;
+  border: 0.15rem solid black;
+  border-radius: 9px;
+  width: 1rem;
+  height: 1rem;
+  background: black;
+  opacity: 0.6;
+}
+
+#toggle-label input[role="switch"]:not(:checked) ~ .state span.on {
+  display: none;
+}
+
+#toggle-label input[role="switch"]:checked ~ .state > span.off {
+  display: none;
+}
+
+#toggle-label input[role="switch"]:checked ~ .state > .container > .position {
+  left: 0.18rem;
+  border-color: green;
+  background: green;
+  opacity: 1;
+}
+
+#toggle-label.focus,
+#toggle-label:hover {
+  padding: 2px 2px 4px 4px;
+  border-width: 2px;
+  outline: none;
+  background-color: #def;
+  cursor: pointer;
+}
+
+#toggle-label.focus span.container,
+#toggle-label:hover span.container {
+  background-color: white;
+}
+
+/* ******************************** SCHEDULE A CALL PAGE START ********************************** */
