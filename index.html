@@ -143,17 +143,28 @@
     <div class="jumbotron">
       <div class="container">
         <h1 tabindex="-1">Schedule Page</h1>
-        <section class="p-4 m-2" id="form-section" aria-hidden="true">
+
+        <section id="schedule-main">
+          <article>
+            <p>At Empower Ability Labs, we are dedicated to cultivating empathy
+              and driving positive change through immersive experiences.
+              Fill out the form below and we’ll get back to you as soon as we
+              can to schedule a call with our sales team!</p>
+          </article>
+        </section>
+
+        <section class="p-4 m-2" id="form-section">
           <article>
             <form action="#" method="post">
-              <label for="" class="pr-5">Business name</label><input
-                type="text" />
+              <label for="name-input" class="pr-5">Business name</label><input
+                id="name-input" type="text"
+                aria-describedby="please enter your business name" />
               <br />
-              <label for="" class="pr-5">Phone Number</label><input type="text"
-                placeholder="e g 613-123-4567" />
+              <label for="phone-input" class="pr-5">Phone Number</label><input
+                id="phone-input" type="text" placeholder="e g 613-123-4567" />
               <br />
-              <label for="" class="pr-5">Email</label><input type="email"
-                required />
+              <label for="email-input" class="pr-5">Email</label><input
+                id="email-input" type="email" required />
 
               <h5></h5>
               <div class="checkbox-container">

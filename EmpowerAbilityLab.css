@@ -66,7 +66,7 @@ nav {
   z-index: 999;
 }
 
-/* ********************************SCHEDULE A CALL PAGE****************************** */
+/* ******************************** SCHEDULE A CALL PAGE START ****************************** */
 
 .logo-home {
     height: 5rem;
@@ -85,9 +85,9 @@ nav {
     color: white;
 }
 
-#form-section {
+/* #form-section {
     display: none;
-}
+} */
 
 .form-checkboxes {
     list-style: none;
@@ -178,4 +178,4 @@ nav {
   background-color: white;
 }
 
-/* ******************************** SCHEDULE A CALL PAGE START ********************************** */
+/* ******************************** SCHEDULE A CALL PAGE END ********************************** */

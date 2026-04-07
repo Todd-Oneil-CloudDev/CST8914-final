@@ -47,7 +47,7 @@ page("/schedule", () => displayPage("schedule"));
 
 // Start on the home page
 page("/", () => page.redirect("/home"));
-page("/index.html", () => page.redirect("/home"));
+page("/index.html.html", () => page.redirect("/home"));
 
 // Initialize router
 page();
