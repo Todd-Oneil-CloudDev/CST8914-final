@@ -73,21 +73,13 @@ nav {
     width: 15rem;
 }
 
-.main-nav {
-    display: flex;
-    gap: 1rem; /* optional spacing */
-    list-style: none; /* remove bullets */
-    padding: 0;
-    margin: 0;
-}
-
 .nav-link {
     color: white;
 }
 
-/* #form-section {
-    display: none;
-} */
+#form-section {
+  background-color: white;
+}
 
 .form-checkboxes {
     list-style: none;
@@ -103,7 +95,7 @@ nav {
 }
 
 #toggle-label {
-  display: block;
+  display: none;
   margin: 0.5em;
   padding: 4px 4px 6px 6px;
   border: 0 solid #005a9c;
@@ -139,7 +131,7 @@ nav {
 #toggle-label input[role="switch"] ~ .state > .container > .position {
   position: relative;
   right: 0.83rem;
-  bottom: 0.16rem;
+  bottom: 0.14rem;
   display: inline-block;
   border: 0.15rem solid black;
   border-radius: 9px;
