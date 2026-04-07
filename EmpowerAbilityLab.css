@@ -95,10 +95,10 @@ nav {
 }
 
 #toggle-label {
-  display: none;
+  display: block;
   margin: 0.5em;
   padding: 4px 4px 6px 6px;
-  border: 0 solid #005a9c;
+  border: 0 transparent;
   border-radius: 5px;
   width: 20rem;
 }
