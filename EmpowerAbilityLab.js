@@ -41,6 +41,24 @@ function displayHomePage() {
   });
 }
 
+function displaySchedulePage() {
+  const main = displayPage("schedule");
+  const submitBtn = main.querySelector("submit-btn");
+
+  submitBtn.addEventListener("click", () => {
+    const nameField = document.getElementById("name-input");
+    const phoneField = document.getElementById("phone-input");
+    const emailField = document.getElementById("email-input");
+    var errFlag = false;
+    const nameErr = "Business Name cannot be blank"
+
+    if (nameField === ""){
+
+    }
+
+  })
+}
+
 page("/home", () => displayHomePage());
 page("/services", () => displayPage("services"));
 page("/schedule", () => displayPage("schedule"));
@@ -74,6 +92,90 @@ window.addEventListener("load", function () {
   Array.from(
     document.querySelectorAll("input[type=checkbox][role^=switch]"),
   ).forEach((element) => new CheckboxSwitch(element));
+});
+
+
+
+// Schedule a call page
+// provided by aria patterns
+class Checkbox {
+  constructor(domNode) {
+    this.domNode = domNode;
+    this.domNode.tabIndex = 0;
+
+    if (!this.domNode.getAttribute('aria-checked')) {
+      this.domNode.setAttribute('aria-checked', 'false');
+    }
+
+    this.domNode.addEventListener('keydown', this.onKeydown.bind(this));
+    this.domNode.addEventListener('keyup', this.onKeyup.bind(this));
+    this.domNode.addEventListener('click', this.onClick.bind(this));
+  }
+
+  toggleCheckbox() {
+    if (this.domNode.getAttribute('aria-checked') === 'true') {
+      this.domNode.setAttribute('aria-checked', 'false');
+    } else {
+      this.domNode.setAttribute('aria-checked', 'true');
+    }
+  }
+  /* EVENT HANDLERS */
+
+  // Make sure to prevent page scrolling on space down
+  onKeydown(event) {
+    if (event.key === ' ') {
+      event.preventDefault();
+    }
+  }
+
+  onKeyup(event) {
+    var flag = false;
+
+    switch (event.key) {
+      case ' ':
+        this.toggleCheckbox();
+        flag = true;
+        break;
+
+      default:
+        break;
+    }
+
+    if (flag) {
+      event.stopPropagation();
+    }
+  }
+
+  onClick() {
+    this.toggleCheckbox();
+  }
+}
+// Initialize checkboxes
+window.addEventListener('load', function () {
+  let checkboxes = document.querySelectorAll('.checkboxes [role="checkbox"]');
+  for (let i = 0; i < checkboxes.length; i++) {
+    new Checkbox(checkboxes[i]);
+  }
+
+  // observer suggestion from copilot to modify base W3 JS code
+  const inviteSpeaker = document.getElementById("speaker");
+  const extraSection = document.getElementById("speaker-extra");
+  const xtraSectionContent = document.getElementById("event-descr");
+
+  const observer = new MutationObserver(() => {
+    const isChecked = inviteSpeaker.getAttribute("aria-checked") === "true";
+    extraSection.style.display = isChecked ? "block" : "none";
+    
+    if(!isChecked) {
+      xtraSectionContent.value = "";
+    }
+  });
+
+  observer.observe(inviteSpeaker, {
+    attributes: true,
+    attributeFilter: ["aria-checked"]
+  });
+
 });
 
 knowledgeRunner();

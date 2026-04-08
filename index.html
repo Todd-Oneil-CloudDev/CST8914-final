@@ -35,7 +35,11 @@
       </div>
     </nav>
   </header>
-  <main></main>
+  <main>
+
+
+
+  </main>
 
   <footer class="container">
     <p>Copyright Accessible Knowledge Base 2023</p>
@@ -161,33 +165,40 @@
                 aria-describedby="please enter your business name" />
               <br />
               <label for="phone-input" class="pr-5">Phone Number</label><input
-                id="phone-input" type="text" placeholder="e g 613-123-4567" />
+                id="phone-input" type="text" placeholder="e.g 613-123-4567" />
               <br />
               <label for="email-input" class="pr-5">Email</label><input
                 id="email-input" type="email" required />
-
-              <h5></h5>
-              <div class="checkbox-container">
-                <ul class="form-checkboxes">
+              <hr>
+              <h5 id="id-group-label">What would you like to talk about:</h5>
+              <div role="group" aria-labelledby="id-group-label"
+                class="checkbox-container">
+                <ul class="checkboxes">
                   <li>
-                    <input type="checkbox" class="mr-2" id="item1" /><label
-                      for="item1">Awareness lab days and workshops</label>
+                    <div role="checkbox" aria-checked="false" tabindex="0">
+                      Awareness lab days and workshops
+                    </div>
                   </li>
                   <li>
-                    <input type="checkbox" class="mr-2" id="item2" /><label
-                      for="item2">Invite a speaker with disabilities to your
-                      event</label>
+                    <div id="speaker" role="checkbox" aria-checked="false"
+                      tabindex="0">
+                      Invite a speaker with disabilities to your event
+                    </div>
                   </li>
                   <li>
-                    <input type="checkbox" class="mr-2" id="item3" /><label
-                      for="item3">Usability testing</label>
+                    <div role="checkbox" aria-checked="false" tabindex="0">
+                      Usability testing
+                    </div>
                   </li>
                 </ul>
               </div>
 
-              <h4>Tell us about your event</h4>
-              <textarea name="event-description" id="event-descr"
-                aria-describedby="Please tell us about your event"></textarea>
+              <div id="speaker-extra">
+                <h4>Tell us about your event</h4>
+                <textarea name="event-description" id="event-descr"
+                  aria-describedby="Please tell us about your event"></textarea>
+              </div>
+
               <br />
               <label id="toggle-label">
                 <span class="label">
@@ -202,8 +213,8 @@
                   <span class="off" aria-hidden="true"> Off </span>
                 </span>
               </label>
-
-              <button>Schedule a call</button>
+              <button id="submit-btn" type="button" class="btn">Schedule a
+                call</button>
             </form>
           </article>
         </section>
