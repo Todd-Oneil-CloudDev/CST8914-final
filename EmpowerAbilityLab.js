@@ -141,6 +141,7 @@ function displaySchedulePage() {
         msgList.appendChild(li);
       }
         form.prepend(msgList);
+        msgList.focus();
     }
 
   })
