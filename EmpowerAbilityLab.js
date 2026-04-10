@@ -109,6 +109,7 @@ function displaySchedulePage() {
       msgList = document.createElement("ul");
       msgList.setAttribute("id", "message");
       msgList.ariaLive = "polite";
+      msgList.tabIndex = "-1";
 
       for (let index = 0; index < errs.length; index++) {
         var li = document.createElement("li");
