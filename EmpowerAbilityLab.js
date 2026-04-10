@@ -98,6 +98,8 @@ function displaySchedulePage() {
 
     // get form section
     var form = document.getElementById("form-section");
+    document.getElementById("message")?.remove();
+
     if(errs.length === 0){
       msgList = document.createElement("p");
       msgList.innerHTML = "Thank you, we'll be in touch soon!";
@@ -113,6 +115,7 @@ function displaySchedulePage() {
 
       for (let index = 0; index < errs.length; index++) {
         var li = document.createElement("li");
+        li.setAttribute("id", "li" + index.toString())
         var anchor = document.createElement("a");
 
         var values = errs[index].split(":");
@@ -133,7 +136,9 @@ function displaySchedulePage() {
 
             if (field) {
               field.focus();
-              field.setSelectionRange(field.value.length, field.value.length);
+              if(field.type === "text"){
+                field.setSelectionRange(field.value.length, field.value.length);
+              }
             }
           } 
         });
@@ -145,7 +150,7 @@ function displaySchedulePage() {
         msgList.focus();
     }
 
-  })
+  });
 }
 
 page("/home", () => displayHomePage());
