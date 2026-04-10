@@ -43,17 +43,104 @@ function displayHomePage() {
 
 function displaySchedulePage() {
   const main = displayPage("schedule");
-  const submitBtn = main.querySelector("submit-btn");
+  const submitBtn = main.querySelector("#submit-btn");
+
+  let checkboxes = document.querySelectorAll('.checkboxes [role="checkbox"]');
+    for (let i = 0; i < checkboxes.length; i++) {
+      new Checkbox(checkboxes[i]);
+    }
+
+    // observer suggestion from copilot to modify base W3 JS code
+    const inviteSpeaker = document.getElementById("speaker");
+    const extraSection = document.getElementById("speaker-extra");
+    const xtraSectionContent = document.getElementById("event-descr");
+
+    const observer = new MutationObserver(() => {
+      const isChecked = inviteSpeaker.getAttribute("aria-checked") === "true";
+      extraSection.style.display = isChecked ? "block" : "none";
+
+      if(!isChecked) {
+        xtraSectionContent.value = "";
+      }
+    });
+    
+    observer.observe(inviteSpeaker, {
+      attributes: true,
+      attributeFilter: ["aria-checked"]
+    });
 
   submitBtn.addEventListener("click", () => {
     const nameField = document.getElementById("name-input");
     const phoneField = document.getElementById("phone-input");
     const emailField = document.getElementById("email-input");
-    var errFlag = false;
-    const nameErr = "Business Name cannot be blank"
+    const nameErr = "Business name cannot be blank"
+    const phoneErr = "Phone number must be 10 digits long";
+    const emailErr = "Email field cannot be blank";
+    var errs = [];
+    let msgList;
 
-    if (nameField === ""){
+    if (nameField.value.length === 0){
+      errs.push(nameErr + ":" + nameField.id.toString())
+    }else {
+      console.log("name error not found, good to go.")
+    }
+    if(phoneField.value.length >=1 && phoneField.value.length < 10){
+      errs.push(phoneErr + ":" + phoneField.id.toString())
+    }else {
+      console.log("phone error not found. good to go.")
+    }
 
+    if (emailField.value.length === 0){
+      errs.push(emailErr + ":" + emailField.id.toString())
+    }else {
+      console.log("email error not found. good to go")
+    }
+
+    // get form section
+    var form = document.getElementById("form-section");
+    if(errs.length === 0){
+      msgList = document.createElement("p");
+      msgList.innerHTML = "Thank you, we'll be in touch soon!";
+      msgList.setAttribute("id", "message");
+      msgList.ariaLive = "polite";
+
+      form.prepend(msgList);
+    }else {
+      msgList = document.createElement("ul");
+      msgList.setAttribute("id", "message");
+      msgList.ariaLive = "polite";
+
+      for (let index = 0; index < errs.length; index++) {
+        var li = document.createElement("li");
+        var anchor = document.createElement("a");
+
+        var values = errs[index].split(":");
+        var message = values[0];
+        var tag = values[1];
+
+        anchor.innerHTML = message;
+        anchor.setAttribute("href", "#");
+        anchor.setAttribute("data-target", tag);
+        anchor.setAttribute("class", "error-link");
+
+        anchor.addEventListener("click", (e) => {
+          if (e.target.classList.contains("error-link")) {
+            e.preventDefault();
+
+            const id = e.target.dataset.target;
+            const field = document.getElementById(id);
+
+            if (field) {
+              field.focus();
+              field.setSelectionRange(field.value.length, field.value.length);
+            }
+          } 
+        });
+
+        li.appendChild(anchor);
+        msgList.appendChild(li);
+      }
+        form.prepend(msgList);
     }
 
   })
@@ -61,15 +148,20 @@ function displaySchedulePage() {
 
 page("/home", () => displayHomePage());
 page("/services", () => displayPage("services"));
-page("/schedule", () => displayPage("schedule"));
+page("/schedule", () => displaySchedulePage());
 
 // Start on the home page
 page("/", () => page.redirect("/home"));
-page("/index.html.html", () => page.redirect("/home"));
+page("/index.html", () => page.redirect("/home"));
 
 // Initialize router
 page();
 
+
+
+// Schedule a call page
+
+/* Checkbox Switch JS provided by WAI-ARIA patterns start */
 class CheckboxSwitch {
   constructor(node) {
     this.switchNode = node;
@@ -93,11 +185,9 @@ window.addEventListener("load", function () {
     document.querySelectorAll("input[type=checkbox][role^=switch]"),
   ).forEach((element) => new CheckboxSwitch(element));
 });
+/* Checkbox Switch JS provided by WAI-ARIA patterns end */
 
-
-
-// Schedule a call page
-// provided by aria patterns
+/* Checkbox JS provided by WAI-ARIA patterns start */
 class Checkbox {
   constructor(domNode) {
     this.domNode = domNode;
@@ -150,32 +240,6 @@ class Checkbox {
     this.toggleCheckbox();
   }
 }
-// Initialize checkboxes
-window.addEventListener('load', function () {
-  let checkboxes = document.querySelectorAll('.checkboxes [role="checkbox"]');
-  for (let i = 0; i < checkboxes.length; i++) {
-    new Checkbox(checkboxes[i]);
-  }
-
-  // observer suggestion from copilot to modify base W3 JS code
-  const inviteSpeaker = document.getElementById("speaker");
-  const extraSection = document.getElementById("speaker-extra");
-  const xtraSectionContent = document.getElementById("event-descr");
-
-  const observer = new MutationObserver(() => {
-    const isChecked = inviteSpeaker.getAttribute("aria-checked") === "true";
-    extraSection.style.display = isChecked ? "block" : "none";
-    
-    if(!isChecked) {
-      xtraSectionContent.value = "";
-    }
-  });
-
-  observer.observe(inviteSpeaker, {
-    attributes: true,
-    attributeFilter: ["aria-checked"]
-  });
-
-});
+/* Checkbox JS provided by WAI-ARIA patterns end */
 
 knowledgeRunner();

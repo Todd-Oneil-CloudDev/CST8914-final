@@ -38,7 +38,6 @@
   <main>
 
 
-
   </main>
 
   <footer class="container">
@@ -165,7 +164,8 @@
                 aria-describedby="please enter your business name" />
               <br />
               <label for="phone-input" class="pr-5">Phone Number</label><input
-                id="phone-input" type="text" placeholder="e.g 613-123-4567" />
+                id="phone-input" type="text" placeholder="e.g 6131234567"
+                maxlength="10" />
               <br />
               <label for="email-input" class="pr-5">Email</label><input
                 id="email-input" type="email" required />
@@ -209,8 +209,8 @@
                   <span class="container">
                     <span class="position"> </span>
                   </span>
-                  <span class="on" aria-hidden="true"> On </span>
-                  <span class="off" aria-hidden="true"> Off </span>
+                  <span class="on" aria-hidden="true"> Yes </span>
+                  <span class="off" aria-hidden="true"> No </span>
                 </span>
               </label>
               <button id="submit-btn" type="button" class="btn">Schedule a
@@ -223,6 +223,7 @@
       <hr />
     </div>
     <!-- /container -->
+
   </template>
 
   <script
