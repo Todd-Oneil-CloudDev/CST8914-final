@@ -66,6 +66,34 @@ nav {
   z-index: 999;
 }
 
+/* ******************************** SERVICES A CALL PAGE START ****************************** */
+
+
+#services-intro {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+#services-intro p {
+  margin: 0;
+  flex: 1;
+  max-width: 800px;
+}
+
+#services-intro .deco-image {
+  flex-shrink: 0;
+}
+
+#services-intro .deco-image img {
+  display: block;
+  width: 120px;
+  height: auto;
+  margin-top: -60px;
+}
+/* ******************************** SERVICES A CALL PAGE END ********************************** */
+
 /* ******************************** SCHEDULE A CALL PAGE START ****************************** */
 
 .logo-home {
@@ -95,10 +123,11 @@ nav {
   margin-top: -60px;
 }
 
-.schedule-image img {
+.deco-image img {
   display: block;
   width: 150px;
   height: auto;
+  margin-top: -60px;
 }
 
 #form-section {
