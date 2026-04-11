@@ -77,8 +77,49 @@ nav {
     color: white;
 }
 
+#schedule-main article {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+#schedule-main article p {
+  margin: 0;
+  flex: 1;
+  max-width: 800px;
+}
+
+.schedule-image {
+  flex-shrink: 0;
+  margin-top: -60px;
+}
+
+.schedule-image img {
+  display: block;
+  width: 150px;
+  height: auto;
+}
+
 #form-section {
   background-color: white;
+}
+
+#form-section label {
+  display: inline-block;
+  width: 500px;
+}
+
+#form-section input {
+  vertical-align: middle;
+}
+
+fieldset {
+  display: inline-block;
+  border: 1px solid #cccccc86;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  min-width: 550px;
 }
 
 #event-descr {
@@ -86,23 +127,19 @@ nav {
     width: 20rem;
 }
 
-#speaker-extra {
+#speaker-extra[hidden] {
   display: none;
 }
 
 #toggle-label {
   display: block;
-  margin: 0.5em;
-  padding: 4px 4px 6px 6px;
-  border: 0 solid black;
-  border-radius: 5px;
-  width: 20rem;
+  width: 100%;
+  margin: 0.5em 0;
 }
 
 #toggle-label .label {
   display: inline-block;
-  width: 25rem;
-  user-select: none;
+  width: auto;
 }
 
 #toggle-label input[role="switch"] {
@@ -180,35 +217,22 @@ ul.checkboxes li {
   padding: 0;
 }
 
-[role="checkbox"] {
+.checkboxes label {
   display: inline-block;
   padding: 4px 8px;
   cursor: pointer;
 }
 
-[role="checkbox"]::before {
-  position: relative;
-  top: 1px;
-  left: -4px;
-  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='16' width='16' style='forced-color-adjust: auto;'%3E%3Crect x='2' y='2' height='13' width='13' rx='2' stroke='currentcolor' stroke-width='1' fill-opacity='0' /%3E%3C/svg%3E");
-}
-
-[role="checkbox"][aria-checked="true"]::before {
-  position: relative;
-  top: 1px;
-  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='16' width='16' style='forced-color-adjust: auto;'%3E%3Crect x='2' y='2' height='13' width='13' rx='2' stroke='currentcolor' stroke-width='1' fill-opacity='0' /%3E%3Cpolyline points='4,8 7,12 12,5' fill='none' stroke='currentcolor' stroke-width='2' /%3E%3C/svg%3E");
-}
-
-[role="checkbox"]:focus,
-[role="checkbox"]:hover {
+.checkboxes label:focus-within,
+.checkboxes label:hover {
   padding: 2px 6px;
   border: 2px solid black;
   border-radius: 5px;
   background-color: #def;
 }
 
-[role="checkbox"]:hover {
-  cursor: pointer;
+.checkboxes input[type="checkbox"] {
+  margin-right: 0.35rem;
 }
 
 /* ******************************** SCHEDULE A CALL PAGE END ********************************** */
