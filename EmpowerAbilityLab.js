@@ -27,6 +27,67 @@ function displayPage(path) {
   return main;
 }
 
+let lastFocus = null;
+
+function isFocusable(element) {
+  if (!element || element.tabIndex < 0 || element.disabled) return false;
+
+  switch (element.nodeName) {
+    case "A":
+      return !!element.href && element.rel !== "ignore";
+    case "INPUT":
+      return element.type !== "hidden";
+    case "BUTTON":
+    case "SELECT":
+    case "TEXTAREA":
+      return true;
+    default:
+      return false;
+  }
+}
+
+function attemptFocus(element) {
+  if (!isFocusable(element)) return false;
+
+  try {
+    element.focus();
+  } catch (e) {
+    return false;
+  }
+
+  return document.activeElement === element;
+}
+
+function focusFirstDescendant(element) {
+  for (let i = 0; i < element.childNodes.length; i++) {
+    const child = element.childNodes[i];
+    if (attemptFocus(child) || focusFirstDescendant(child)) return true;
+  }
+  return false;
+}
+
+function focusLastDescendant(element) {
+  for (let i = element.childNodes.length - 1; i >= 0; i--) {
+    const child = element.childNodes[i];
+    if (attemptFocus(child) || focusLastDescendant(child)) return true;
+  }
+  return false;
+}
+
+function trapFocus(event, modal) {
+  if (modal.contains(event.target)) {
+    lastFocus = event.target;
+  } else {
+    focusFirstDescendant(modal);
+
+    if (lastFocus === document.activeElement) {
+      focusLastDescendant(modal);
+    }
+
+    lastFocus = document.activeElement;
+  }
+}
+
 function displayHomePage() {
   const main = displayPage("home");
   const openBtn = main.querySelector("#openModal");
@@ -34,13 +95,33 @@ function displayHomePage() {
   const modal = main.querySelector(".home-modal");
   const backdrop = main.querySelector(".modal-backdrop");
 
+  function onFocus(e) {
+    if (modal.hidden) return;
+    trapFocus(e, modal);
+  }
+
+  function onKeydown(e) {
+    if (e.key === "Escape" && !modal.hidden) {
+      closeBtn.click();
+    }
+  }
+
   openBtn.addEventListener("click", () => {
     modal.hidden = false;
     backdrop.hidden = false;
     modal.setAttribute("aria-hidden", "false");
 
     const modalHeading = modal.querySelector("h2");
-    if (modalHeading) modalHeading.focus();
+    if (modalHeading) {
+      modalHeading.focus();
+      lastFocus = modalHeading;
+    } else {
+      focusFirstDescendant(modal);
+      lastFocus = document.activeElement;
+    }
+
+    document.addEventListener("focus", onFocus, true);
+    document.addEventListener("keydown", onKeydown);
   });
 
   closeBtn.addEventListener("click", () => {
@@ -48,7 +129,9 @@ function displayHomePage() {
     backdrop.hidden = true;
     modal.setAttribute("aria-hidden", "true");
 
-    // return focus to button
+    document.removeEventListener("focus", onFocus, true);
+    document.removeEventListener("keydown", onKeydown);
+
     openBtn.focus();
   });
 }
@@ -58,30 +141,31 @@ function displaySchedulePage() {
   const submitBtn = main.querySelector("#submit-btn");
 
   let checkboxes = document.querySelectorAll('.checkboxes [role="checkbox"]');
-  for (let i = 0; i < checkboxes.length; i++) {
-    new Checkbox(checkboxes[i]);
-  }
+    for (let i = 0; i < checkboxes.length; i++) {
+      new Checkbox(checkboxes[i]);
+    }
 
   // observer suggestion from copilot to modify base W3 JS code
   const inviteSpeaker = document.getElementById("speaker");
   const extraSection = document.getElementById("speaker-extra");
   const xtraSectionContent = document.getElementById("event-descr");
 
-  const observer = new MutationObserver(() => {
-    const isChecked = inviteSpeaker.getAttribute("aria-checked") === "true";
-    extraSection.style.display = isChecked ? "block" : "none";
+
+  function updateSpeakerSection() {
+    const isChecked = inviteSpeaker.checked;
+    extraSection.hidden = !isChecked;
 
     if (!isChecked) {
       xtraSectionContent.value = "";
     }
-  });
+  }
 
-  observer.observe(inviteSpeaker, {
-    attributes: true,
-    attributeFilter: ["aria-checked"]
-  });
+  inviteSpeaker.addEventListener("change", updateSpeakerSection);
+  updateSpeakerSection();
 
-  submitBtn.addEventListener("click", () => {
+  submitBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
     const nameField = document.getElementById("name-input");
     const phoneField = document.getElementById("phone-input");
     const emailField = document.getElementById("email-input");
@@ -91,21 +175,19 @@ function displaySchedulePage() {
     var errs = [];
     let msgList;
 
-    if (nameField.value.length === 0) {
+    if (nameField.value.trim().length === 0) {
       errs.push(nameErr + ":" + nameField.id.toString())
     } else {
       console.log("name error not found, good to go.")
     }
-    if (phoneField.value.length >= 1 && phoneField.value.length < 10) {
-      errs.push(phoneErr + ":" + phoneField.id.toString())
+
+    const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
+    const phoneValue = phoneField.value.trim();
+
+    if (phoneValue.length > 0 && !phonePattern.test(phoneValue)) {
+      errs.push("Phone number must be in the format 613-123-1234:" + phoneField.id);
     } else {
       console.log("phone error not found. good to go.")
-    }
-
-    if (emailField.value.length === 0) {
-      errs.push(emailErr + ":" + emailField.id.toString())
-    } else {
-      console.log("email error not found. good to go")
     }
 
     // get form section
@@ -116,13 +198,13 @@ function displaySchedulePage() {
       msgList = document.createElement("p");
       msgList.innerHTML = "Thank you, we'll be in touch soon!";
       msgList.setAttribute("id", "message");
-      msgList.ariaLive = "polite";
+      msgList.setAttribute("aria-live", "polite");
 
       form.prepend(msgList);
     } else {
       msgList = document.createElement("ul");
       msgList.setAttribute("id", "message");
-      msgList.ariaLive = "polite";
+      msgList.setAttribute("aria-live", "polite");
       msgList.tabIndex = "-1";
 
       for (let index = 0; index < errs.length; index++) {
@@ -184,8 +266,8 @@ page();
 class CheckboxSwitch {
   constructor(node) {
     this.switchNode = node;
-    this.switchNode.addEventListener("focus", () => this.onFocus(event));
-    this.switchNode.addEventListener("blur", () => this.onBlur(event));
+    this.switchNode.addEventListener("focus", (event) => this.onFocus(event));
+    this.switchNode.addEventListener("blur", (event) => this.onBlur(event));
   }
 
   onFocus(event) {
@@ -206,59 +288,6 @@ window.addEventListener("load", function () {
 });
 /* Checkbox Switch JS provided by WAI-ARIA patterns end */
 
-/* Checkbox JS provided by WAI-ARIA patterns start */
-class Checkbox {
-  constructor(domNode) {
-    this.domNode = domNode;
-    this.domNode.tabIndex = 0;
 
-    if (!this.domNode.getAttribute('aria-checked')) {
-      this.domNode.setAttribute('aria-checked', 'false');
-    }
-
-    this.domNode.addEventListener('keydown', this.onKeydown.bind(this));
-    this.domNode.addEventListener('keyup', this.onKeyup.bind(this));
-    this.domNode.addEventListener('click', this.onClick.bind(this));
-  }
-
-  toggleCheckbox() {
-    if (this.domNode.getAttribute('aria-checked') === 'true') {
-      this.domNode.setAttribute('aria-checked', 'false');
-    } else {
-      this.domNode.setAttribute('aria-checked', 'true');
-    }
-  }
-  /* EVENT HANDLERS */
-
-  // Make sure to prevent page scrolling on space down
-  onKeydown(event) {
-    if (event.key === ' ') {
-      event.preventDefault();
-    }
-  }
-
-  onKeyup(event) {
-    var flag = false;
-
-    switch (event.key) {
-      case ' ':
-        this.toggleCheckbox();
-        flag = true;
-        break;
-
-      default:
-        break;
-    }
-
-    if (flag) {
-      event.stopPropagation();
-    }
-  }
-
-  onClick() {
-    this.toggleCheckbox();
-  }
-}
-/* Checkbox JS provided by WAI-ARIA patterns end */
 
 knowledgeRunner();
