@@ -2,26 +2,54 @@ body {
   padding-top: 0;
 }
 
-header {
+/* header {
   display: flex;
   align-items:center;
   position:relative; 
   justify-content: space-between;
   padding: 1rem 2rem; 
   background-color: rgb(239, 228, 214);
-}
+} */
+
+/* ******************************** Navbar START ****************************** */
 
 .navbar-brand {
     height:65px;
     width: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;  /* space between text and logo */
 }
 
-nav {
+  .navbar-collapse .navbar-nav {
+    text-align: right;
+  }
+
+.navbar-nav .nav-link, a.navbar-brand  { 
+    color: black !important;
+}
+.navbar-nav .nav-link:hover, a.navbar-brand:hover {
+    color: brown !important;
+}
+
+a.navbar-brand { 
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.navbar-toggler {
+  border-color: rgba(0,0,0,0.2);   /* optional: light border */
+}
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(0, 0, 0, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* nav {
   position:absolute;
   left: 50%;
   transform: translateX(-50%);
   justify-content: center;
-}
+} */
 
 #navbar{
   display: flex;
@@ -40,6 +68,9 @@ nav {
 #navbar a:hover {
   color: brown;
 }
+/* ******************************** Navbar END ****************************** */
+
+/* ******************************** HOME PAGE  START ****************************** */
 
 .home-modal {
   position: fixed;
@@ -65,6 +96,7 @@ nav {
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
+/* ******************************** HOME PAGE  END ****************************** */
 
 /* ******************************** SCHEDULE A CALL PAGE START ****************************** */
 
@@ -212,3 +244,71 @@ ul.checkboxes li {
 }
 
 /* ******************************** SCHEDULE A CALL PAGE END ********************************** */
+/* ******************************** All focus elements for accessibility START ********************************** */
+
+/* Custom focus indicator for all interactive elements */
+button:focus-visible,
+a:focus-visible,
+[role="checkbox"]:focus-visible,
+[role="switch"]:focus-visible,
+.navbar-toggler:focus-visible,
+.btn:focus-visible,
+#openModal:focus-visible,
+#closeModal:focus-visible,
+#submit-btn:focus-visible {
+  outline: 3px solid #005fcc !important;   /* A bright, accessible blue outline */
+  outline-offset: 2px !important;           /* Creates a small gap between the button and the outline */
+  border-radius: 4px !important;           /* Softens the corners of the outline to match your design */
+}
+/* Custom focus for switches */
+input[type="checkbox"][role="switch"]:focus-visible {
+  /* Hide default outline on the invisible input */
+  outline: none;
+}
+
+/* Show focus on the parent label or the .state container */
+#toggle-label:focus-within {
+  outline: 3px solid #005fcc;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* If you want the focus specifically on the switch's visual part (.state) */
+#toggle-label:focus-within .state {
+  outline: 3px solid #005fcc;
+  outline-offset: 2px;
+  border-radius: 20px;  /* pill shape */
+}
+/* ******************************** All focus elements for accessibility END ********************************** */
+/* ******************************** MEDIA QUERIES  ****************************** */
+/* Desktop: center nav links */
+/* Desktop only – center nav links using CSS Grid */
+@media (min-width: 992px) {
+  .navbar .container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;  /* three columns: left, center, right */
+    align-items: center;
+  }
+
+  .navbar-brand {
+    grid-column: 1 / 2;        /* stays in first column */
+    justify-self: start;       /* left‑aligned inside its column */
+  }
+
+  .navbar-toggler {
+    display: none;             /* hide burger on desktop */
+  }
+
+  .navbar-collapse {
+    grid-column: 2 / 3;        /* moves to the middle column */
+    justify-self: center;      /* centers the whole collapse block */
+    width: auto;               /* prevents full width */
+  }
+
+  .navbar-nav {
+    margin: 0 !important;      /* remove any auto margins that interfere */
+    text-align: center;
+  }
+
+  /* Remove any leftover ml-auto from the ul (see Step 2 below) */
+}

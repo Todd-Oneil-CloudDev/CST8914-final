@@ -1,7 +1,7 @@
 //Template Function that can be used to run JavaScript on the page
 //Note: This can be changed to whatever JavaScript formatting you would like
 "use strict";
-function knowledgeRunner() {}
+function knowledgeRunner() { }
 function displayPage(path) {
   let template = document.getElementById(`${path}-template`);
   const formattedPath = path.charAt(0).toUpperCase() + path.slice(1);
@@ -12,6 +12,18 @@ function displayPage(path) {
 
   const heading = main.querySelector("h1");
   heading.focus();
+
+  // Make Enter key toggle switches too
+  document.querySelectorAll('input[type="checkbox"][role="switch"]').forEach(switchEl => {
+    switchEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        switchEl.checked = !switchEl.checked;
+        // Trigger change event so any listeners update UI
+        switchEl.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+  });
   return main;
 }
 
@@ -46,28 +58,28 @@ function displaySchedulePage() {
   const submitBtn = main.querySelector("#submit-btn");
 
   let checkboxes = document.querySelectorAll('.checkboxes [role="checkbox"]');
-    for (let i = 0; i < checkboxes.length; i++) {
-      new Checkbox(checkboxes[i]);
+  for (let i = 0; i < checkboxes.length; i++) {
+    new Checkbox(checkboxes[i]);
+  }
+
+  // observer suggestion from copilot to modify base W3 JS code
+  const inviteSpeaker = document.getElementById("speaker");
+  const extraSection = document.getElementById("speaker-extra");
+  const xtraSectionContent = document.getElementById("event-descr");
+
+  const observer = new MutationObserver(() => {
+    const isChecked = inviteSpeaker.getAttribute("aria-checked") === "true";
+    extraSection.style.display = isChecked ? "block" : "none";
+
+    if (!isChecked) {
+      xtraSectionContent.value = "";
     }
+  });
 
-    // observer suggestion from copilot to modify base W3 JS code
-    const inviteSpeaker = document.getElementById("speaker");
-    const extraSection = document.getElementById("speaker-extra");
-    const xtraSectionContent = document.getElementById("event-descr");
-
-    const observer = new MutationObserver(() => {
-      const isChecked = inviteSpeaker.getAttribute("aria-checked") === "true";
-      extraSection.style.display = isChecked ? "block" : "none";
-
-      if(!isChecked) {
-        xtraSectionContent.value = "";
-      }
-    });
-    
-    observer.observe(inviteSpeaker, {
-      attributes: true,
-      attributeFilter: ["aria-checked"]
-    });
+  observer.observe(inviteSpeaker, {
+    attributes: true,
+    attributeFilter: ["aria-checked"]
+  });
 
   submitBtn.addEventListener("click", () => {
     const nameField = document.getElementById("name-input");
@@ -79,20 +91,20 @@ function displaySchedulePage() {
     var errs = [];
     let msgList;
 
-    if (nameField.value.length === 0){
+    if (nameField.value.length === 0) {
       errs.push(nameErr + ":" + nameField.id.toString())
-    }else {
+    } else {
       console.log("name error not found, good to go.")
     }
-    if(phoneField.value.length >=1 && phoneField.value.length < 10){
+    if (phoneField.value.length >= 1 && phoneField.value.length < 10) {
       errs.push(phoneErr + ":" + phoneField.id.toString())
-    }else {
+    } else {
       console.log("phone error not found. good to go.")
     }
 
-    if (emailField.value.length === 0){
+    if (emailField.value.length === 0) {
       errs.push(emailErr + ":" + emailField.id.toString())
-    }else {
+    } else {
       console.log("email error not found. good to go")
     }
 
@@ -100,14 +112,14 @@ function displaySchedulePage() {
     var form = document.getElementById("form-section");
     document.getElementById("message")?.remove();
 
-    if(errs.length === 0){
+    if (errs.length === 0) {
       msgList = document.createElement("p");
       msgList.innerHTML = "Thank you, we'll be in touch soon!";
       msgList.setAttribute("id", "message");
       msgList.ariaLive = "polite";
 
       form.prepend(msgList);
-    }else {
+    } else {
       msgList = document.createElement("ul");
       msgList.setAttribute("id", "message");
       msgList.ariaLive = "polite";
@@ -136,18 +148,18 @@ function displaySchedulePage() {
 
             if (field) {
               field.focus();
-              if(field.type === "text"){
+              if (field.type === "text") {
                 field.setSelectionRange(field.value.length, field.value.length);
               }
             }
-          } 
+          }
         });
 
         li.appendChild(anchor);
         msgList.appendChild(li);
       }
-        form.prepend(msgList);
-        msgList.focus();
+      form.prepend(msgList);
+      msgList.focus();
     }
 
   });
