@@ -24,6 +24,18 @@ function displayPage(path) {
       }
     });
   });
+
+  // Make Enter key toggle checkboxes (optional enhancement)
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        checkbox.checked = !checkbox.checked;
+        checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+  });
   return main;
 }
 
@@ -141,9 +153,9 @@ function displaySchedulePage() {
   const submitBtn = main.querySelector("#submit-btn");
 
   let checkboxes = document.querySelectorAll('.checkboxes [role="checkbox"]');
-    for (let i = 0; i < checkboxes.length; i++) {
-      new Checkbox(checkboxes[i]);
-    }
+  for (let i = 0; i < checkboxes.length; i++) {
+    new Checkbox(checkboxes[i]);
+  }
 
   // observer suggestion from copilot to modify base W3 JS code
   const inviteSpeaker = document.getElementById("speaker");
