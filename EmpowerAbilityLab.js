@@ -182,24 +182,33 @@ function displaySchedulePage() {
     const phoneField = document.getElementById("phone-input");
     const emailField = document.getElementById("email-input");
     const nameErr = "Business name cannot be blank"
-    const phoneErr = "Phone number must be 10 digits long";
-    const emailErr = "Email field cannot be blank";
+    const phoneErr = "Phone number must be in the format 613-123-1234:";
+    const emailBlankErr = "Email field cannot be blank:";
+    const emailFormatErr = "Email must be in the format of email@domain.com:";
+
     var errs = [];
     let msgList;
 
     if (nameField.value.trim().length === 0) {
       errs.push(nameErr + ":" + nameField.id.toString())
-    } else {
-      console.log("name error not found, good to go.")
     }
 
     const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
     const phoneValue = phoneField.value.trim();
 
     if (phoneValue.length > 0 && !phonePattern.test(phoneValue)) {
-      errs.push("Phone number must be in the format 613-123-1234:" + phoneField.id);
-    } else {
-      console.log("phone error not found. good to go.")
+      errs.push(phoneErr + phoneField.id);
+    }
+
+    const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    const emailValue = emailField.value.trim();
+
+    if (emailValue.length > 0 && !emailPattern.test(emailValue)) {
+      errs.push(emailFormatErr + emailField.id)
+    }
+
+    if (emailValue.length === 0) {
+      errs.push(emailBlankErr + emailField.id);
     }
 
     // get form section
@@ -233,8 +242,8 @@ function displaySchedulePage() {
         anchor.setAttribute("data-target", tag);
         anchor.setAttribute("class", "error-link");
 
-        anchor.addEventListener("click", (e) => {
-          if (e.target.classList.contains("error-link")) {
+        anchor.addEventListener("keydown", (e) => {
+          if (e.target.classList.contains("error-link") && (e.key === " " || e.key === "Enter")) {
             e.preventDefault();
 
             const id = e.target.dataset.target;
