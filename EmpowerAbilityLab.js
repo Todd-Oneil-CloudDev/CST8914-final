@@ -17,14 +17,12 @@ function updateActiveNav(path) {
   });
 }
 
-function knowledgeRunner() { }
-
 function displayPage(path) {
   let template = document.getElementById(`${path}-template`);
   const formattedPath = path.charAt(0).toUpperCase() + path.slice(1);
   document.title = `${formattedPath} - Empower Ability Labs`;
 
-  // 🔥 FIX: highlight active menu
+  // ✅ Highlight active menu
   updateActiveNav(`/${path}`);
 
   let main = document.querySelector("main");
@@ -37,12 +35,11 @@ function displayPage(path) {
   return main;
 }
 
-// ROUTES
+// ROUTING
 page("/home", () => displayPage("home"));
 page("/services", () => displayPage("services"));
 page("/schedule", () => displayPage("schedule"));
 
-// DEFAULT
 page("/", () => page.redirect("/home"));
 page("/index.html", () => page.redirect("/home"));
 
