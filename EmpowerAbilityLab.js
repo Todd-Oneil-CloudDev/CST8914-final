@@ -180,13 +180,18 @@ function displaySchedulePage() {
     const phoneErr = "Phone number must be in the format 613-123-1234:";
     const emailBlankErr = "Email field cannot be blank:";
     const emailFormatErr = "Email must be in the format of email@domain.com:";
+    const statusRegion = document.getElementById("message");
 
     nameField.removeAttribute("aria-invalid");
     phoneField.removeAttribute("aria-invalid");
     emailField.removeAttribute("aria-invalid");
 
+    statusRegion.textContent = "";
+    statusRegion.className = "";
+    statusRegion.removeAttribute("tabindex");
+    document.getElementById("error-list")?.remove();
+
     var errs = [];
-    let msgList;
 
     if (nameField.value.trim().length === 0) {
       errs.push(nameErr + ":" + nameField.id.toString());
@@ -216,22 +221,18 @@ function displaySchedulePage() {
 
     // get form section
     var form = document.getElementById("form-section");
-    document.getElementById("message")?.remove();
+
 
     if (errs.length === 0) {
-      msgList = document.createElement("p");
-      msgList.innerHTML = "Thank you, we'll be in touch soon!";
-      msgList.setAttribute("id", "message");
-      msgList.setAttribute("aria-live", "polite");
-      msgList.classList.add("success-message");
+      statusRegion.classList.add("success-message");
+      statusRegion.textContent = "Thank you, we'll be in touch soon!";
+    }
 
-      form.prepend(msgList);
-    } else {
-      msgList = document.createElement("ul");
-      msgList.setAttribute("id", "message");
-      msgList.setAttribute("aria-live", "polite");
-      msgList.tabIndex = "-1";
-      msgList.classList.add("error-message");
+    else {
+      const errorList = document.createElement("ul");
+      errorList.setAttribute("id", "error-list");
+      errorList.tabIndex = "-1";
+      errorList.classList.add("error-message");
 
       for (let index = 0; index < errs.length; index++) {
         var li = document.createElement("li");
@@ -278,10 +279,10 @@ function displaySchedulePage() {
         });
 
         li.appendChild(anchor);
-        msgList.appendChild(li);
+        errorList.appendChild(li);
       }
-      form.prepend(msgList);
-      msgList.focus();
+      form.prepend(errorList);
+      errorList.focus();
     }
 
   });
