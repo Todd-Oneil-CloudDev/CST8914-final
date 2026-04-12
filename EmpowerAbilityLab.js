@@ -152,11 +152,6 @@ function displaySchedulePage() {
   const main = displayPage("schedule");
   const submitBtn = main.querySelector("#submit-btn");
 
-  let checkboxes = document.querySelectorAll('.checkboxes [role="checkbox"]');
-  for (let i = 0; i < checkboxes.length; i++) {
-    new Checkbox(checkboxes[i]);
-  }
-
   // observer suggestion from copilot to modify base W3 JS code
   const inviteSpeaker = document.getElementById("speaker");
   const extraSection = document.getElementById("speaker-extra");
@@ -185,12 +180,22 @@ function displaySchedulePage() {
     const phoneErr = "Phone number must be in the format 613-123-1234:";
     const emailBlankErr = "Email field cannot be blank:";
     const emailFormatErr = "Email must be in the format of email@domain.com:";
+    const statusRegion = document.getElementById("message");
+
+    nameField.removeAttribute("aria-invalid");
+    phoneField.removeAttribute("aria-invalid");
+    emailField.removeAttribute("aria-invalid");
+
+    statusRegion.textContent = "";
+    statusRegion.className = "";
+    statusRegion.removeAttribute("tabindex");
+    document.getElementById("error-list")?.remove();
 
     var errs = [];
-    let msgList;
 
     if (nameField.value.trim().length === 0) {
-      errs.push(nameErr + ":" + nameField.id.toString())
+      errs.push(nameErr + ":" + nameField.id.toString());
+      nameField.setAttribute("aria-invalid", "true");
     }
 
     const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
@@ -198,39 +203,39 @@ function displaySchedulePage() {
 
     if (phoneValue.length > 0 && !phonePattern.test(phoneValue)) {
       errs.push(phoneErr + phoneField.id);
+      phoneField.setAttribute("aria-invalid", "true");
     }
 
     const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     const emailValue = emailField.value.trim();
 
     if (emailValue.length > 0 && !emailPattern.test(emailValue)) {
-      errs.push(emailFormatErr + emailField.id)
+      errs.push(emailFormatErr + emailField.id);
+      emailField.setAttribute("aria-invalid", "true");
     }
 
     if (emailValue.length === 0) {
       errs.push(emailBlankErr + emailField.id);
+      emailField.setAttribute("aria-invalid", "true");
     }
 
     // get form section
-    var form = document.getElementById("message-cont");
-    document.getElementById("message")?.remove();
+    var form = document.getElementById("form-section");
+
 
     if (errs.length === 0) {
-      msgList = document.createElement("p");
-      msgList.innerHTML = "Thank you, we'll be in touch soon!";
-      msgList.setAttribute("id", "message");
-      msgList.tabIndex = "-1";
+      statusRegion.classList.add("success-message");
+      statusRegion.textContent = "Thank you, we'll be in touch soon!";
 
       form.prepend(msgList);
-      form.removeAttribute("hidden")
-      form.ariaHidden = "false"
+      statusRegion.focus()
+    }
 
-      msgList.focus()
-
-    } else {
-      msgList = document.createElement("ul");
-      msgList.setAttribute("id", "message");
-      // msgList.tabIndex = "-1";
+    else {
+      const errorList = document.createElement("ul");
+      errorList.setAttribute("id", "error-list");
+      errorList.tabIndex = "-1";
+      errorList.classList.add("error-message");
 
       for (let index = 0; index < errs.length; index++) {
         var li = document.createElement("li");
@@ -261,19 +266,32 @@ function displaySchedulePage() {
           }
         });
 
-        li.appendChild(anchor);
-        msgList.appendChild(li);
-      }
-      form.append(msgList);
-      form.removeAttribute("hidden")
-      form.ariaHidden = "false"
+        anchor.addEventListener("click", (e) => {
+          e.preventDefault();
 
-      const firstErrLink = msgList.querySelector(".error-link")
+          const id = e.currentTarget.dataset.target;
+          const field = document.getElementById(id);
+
+          if (field) {
+            field.focus();
+            if (field.type === "text") {
+              field.setSelectionRange(field.value.length, field.value.length);
+            }
+          }
+        });
+
+        li.appendChild(anchor);
+        errorList.appendChild(li);
+      }
+
+      form.prepend(errorList);
+
+      const firstErrLink = errorList.querySelector(".error-link")
       if(firstErrLink){
         firstErrLink.focus()
       }
     }
-  });
+  })
 }
 
 page("/home", () => displayHomePage());

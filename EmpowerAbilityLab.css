@@ -14,32 +14,38 @@ body {
 /* ******************************** Navbar START ****************************** */
 
 .navbar-brand {
-    height:65px;
-    width: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;  /* space between text and logo */
+  height: 65px;
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* space between text and logo */
 }
 
-  .navbar-collapse .navbar-nav {
-    text-align: right;
-  }
-
-.navbar-nav .nav-link, a.navbar-brand  { 
-    color: black !important;
-}
-.navbar-nav .nav-link:hover, a.navbar-brand:hover {
-    color: brown !important;
+.navbar-collapse .navbar-nav {
+  text-align: right;
 }
 
-a.navbar-brand { 
-    font-weight: 500;
-    font-size: 1.2rem;
+.navbar-nav .nav-link,
+a.navbar-brand {
+  color: black !important;
+}
+
+.navbar-nav .nav-link:hover,
+a.navbar-brand:hover {
+  color: brown !important;
+}
+
+a.navbar-brand {
+  font-weight: 500;
+  font-size: 1.2rem;
 }
 
 .navbar-toggler {
-  border-color: rgba(0,0,0,0.2);   /* optional: light border */
+  border-color: rgba(0, 0, 0, 0.2);
+  /* optional: light border */
 }
+
 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(0, 0, 0, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
 }
@@ -51,7 +57,7 @@ a.navbar-brand {
   justify-content: center;
 } */
 
-#navbar{
+#navbar {
   display: flex;
   gap: 2rem;
 }
@@ -68,6 +74,7 @@ a.navbar-brand {
 #navbar a:hover {
   color: brown;
 }
+
 /* ******************************** Navbar END ****************************** */
 
 /* ******************************** HOME PAGE  START ****************************** */
@@ -96,6 +103,7 @@ a.navbar-brand {
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
+
 /* ******************************** HOME PAGE  END ****************************** */
 
 /* ******************************** SERVICES A CALL PAGE START ****************************** */
@@ -124,17 +132,18 @@ a.navbar-brand {
   height: auto;
   margin-top: -60px;
 }
+
 /* ******************************** SERVICES A CALL PAGE END ********************************** */
 
 /* ******************************** SCHEDULE A CALL PAGE START ****************************** */
 
 .logo-home {
-    height: 5rem;
-    width: 15rem;
+  height: 5rem;
+  width: 15rem;
 }
 
 .nav-link {
-    color: white;
+  color: white;
 }
 
 #schedule-main article {
@@ -183,9 +192,15 @@ fieldset {
   min-width: 550px;
 }
 
+#form-section #speaker-extra label {
+  display: block;
+  width: auto;
+  margin-bottom: 0.5rem;
+}
+
 #event-descr {
-    height: 10rem;
-    width: 20rem;
+  height: 10rem;
+  width: 20rem;
 }
 
 #speaker-extra[hidden] {
@@ -207,12 +222,12 @@ fieldset {
   opacity: 0;
 }
 
-#toggle-label input[role="switch"] ~ .state {
+#toggle-label input[role="switch"]~.state {
   display: inline-block;
   user-select: none;
 }
 
-#toggle-label input[role="switch"] ~ .state > .container {
+#toggle-label input[role="switch"]~.state>.container {
   position: relative;
   top: 2px;
   display: inline-block;
@@ -222,7 +237,7 @@ fieldset {
   border-radius: 11px;
 }
 
-#toggle-label input[role="switch"] ~ .state > .container > .position {
+#toggle-label input[role="switch"]~.state>.container>.position {
   position: relative;
   right: 0.83rem;
   bottom: 0.14rem;
@@ -235,15 +250,15 @@ fieldset {
   opacity: 0.6;
 }
 
-#toggle-label input[role="switch"]:not(:checked) ~ .state span.on {
+#toggle-label input[role="switch"]:not(:checked)~.state span.on {
   display: none;
 }
 
-#toggle-label input[role="switch"]:checked ~ .state > span.off {
+#toggle-label input[role="switch"]:checked~.state>span.off {
   display: none;
 }
 
-#toggle-label input[role="switch"]:checked ~ .state > .container > .position {
+#toggle-label input[role="switch"]:checked~.state>.container>.position {
   left: 0.18rem;
   border-color: green;
   background: green;
@@ -296,6 +311,49 @@ ul.checkboxes li {
   margin-right: 0.35rem;
 }
 
+.success-message {
+  background-color: #e6f4ea;
+  color: #1e7e34;
+  border: 2px solid #28a745;
+  padding: 12px;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.error-message {
+  background-color: #fdecea;
+  border: 2px solid #dc3545;
+  padding: 12px 16px;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  color: #b02a37;
+  list-style-position: inside;
+  padding-left: 1.5rem;
+  margin-top: 0;
+}
+
+.error-message li {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.error-message li:last-child {
+  margin-bottom: 0;
+}
+
+.error-link {
+  color: #b02a37;
+  text-decoration: underline;
+}
+
+.error-link:hover,
+.error-link:focus {
+  color: #8a1c28;
+  outline: 2px solid #dc3545;
+  outline-offset: 2px;
+}
+
 /* ******************************** SCHEDULE A CALL PAGE END ********************************** */
 /* ******************************** All focus elements for accessibility START ********************************** */
 
@@ -309,10 +367,14 @@ a:focus-visible,
 #openModal:focus-visible,
 #closeModal:focus-visible,
 #submit-btn:focus-visible {
-  outline: 3px solid #005fcc !important;   /* A bright, accessible blue outline */
-  outline-offset: 2px !important;           /* Creates a small gap between the button and the outline */
-  border-radius: 4px !important;           /* Softens the corners of the outline to match your design */
+  outline: 3px solid #005fcc !important;
+  /* A bright, accessible blue outline */
+  outline-offset: 2px !important;
+  /* Creates a small gap between the button and the outline */
+  border-radius: 4px !important;
+  /* Softens the corners of the outline to match your design */
 }
+
 /* Custom focus for switches */
 input[type="checkbox"][role="switch"]:focus-visible {
   /* Hide default outline on the invisible input */
@@ -330,8 +392,10 @@ input[type="checkbox"][role="switch"]:focus-visible {
 #toggle-label:focus-within .state {
   outline: 3px solid #005fcc;
   outline-offset: 2px;
-  border-radius: 20px;  /* pill shape */
+  border-radius: 20px;
+  /* pill shape */
 }
+
 /* ******************************** All focus elements for accessibility END ********************************** */
 /* ******************************** MEDIA QUERIES  ****************************** */
 /* Desktop: center nav links */
@@ -339,29 +403,106 @@ input[type="checkbox"][role="switch"]:focus-visible {
 @media (min-width: 992px) {
   .navbar .container {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;  /* three columns: left, center, right */
+    grid-template-columns: 1fr auto 1fr;
+    /* three columns: left, center, right */
     align-items: center;
   }
 
   .navbar-brand {
-    grid-column: 1 / 2;        /* stays in first column */
-    justify-self: start;       /* left‑aligned inside its column */
+    grid-column: 1 / 2;
+    /* stays in first column */
+    justify-self: start;
+    /* left‑aligned inside its column */
   }
 
   .navbar-toggler {
-    display: none;             /* hide burger on desktop */
+    display: none;
+    /* hide burger on desktop */
   }
 
   .navbar-collapse {
-    grid-column: 2 / 3;        /* moves to the middle column */
-    justify-self: center;      /* centers the whole collapse block */
-    width: auto;               /* prevents full width */
+    grid-column: 2 / 3;
+    /* moves to the middle column */
+    justify-self: center;
+    /* centers the whole collapse block */
+    width: auto;
+    /* prevents full width */
   }
 
   .navbar-nav {
-    margin: 0 !important;      /* remove any auto margins that interfere */
+    margin: 0 !important;
+    /* remove any auto margins that interfere */
     text-align: center;
   }
 
   /* Remove any leftover ml-auto from the ul (see Step 2 below) */
+}
+
+@media (max-width: 767px) {
+
+  #form-section>article>form>label,
+  #speaker-extra label {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.3rem;
+  }
+
+  #form-section input:not([type="checkbox"]),
+  #form-section textarea {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  #form-section .checkboxes li {
+    width: 100%;
+  }
+
+  #form-section .checkboxes label {
+    display: block;
+    width: 100%;
+    position: relative;
+    padding: 4px 8px 4px 1.75rem;
+    white-space: normal;
+    line-height: 1.4;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+
+  #form-section .checkboxes input[type="checkbox"] {
+    position: absolute;
+    left: 8px;
+    top: 0.35rem;
+    width: auto;
+    margin: 0;
+  }
+
+  #form-section .checkboxes label:focus-within,
+  #form-section .checkboxes label:hover {
+    padding: 4px 8px 4px 1.75rem;
+  }
+
+  fieldset {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #event-descr {
+    width: 100%;
+  }
+
+  #schedule-main article {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .deco-image img {
+    margin-top: 0;
+  }
+
+  #toggle-label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
 }
