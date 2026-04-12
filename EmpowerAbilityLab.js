@@ -212,21 +212,25 @@ function displaySchedulePage() {
     }
 
     // get form section
-    var form = document.getElementById("form-section");
+    var form = document.getElementById("message-cont");
     document.getElementById("message")?.remove();
 
     if (errs.length === 0) {
       msgList = document.createElement("p");
       msgList.innerHTML = "Thank you, we'll be in touch soon!";
       msgList.setAttribute("id", "message");
-      msgList.setAttribute("aria-live", "polite");
+      msgList.tabIndex = "-1";
 
       form.prepend(msgList);
+      form.removeAttribute("hidden")
+      form.ariaHidden = "false"
+
+      msgList.focus()
+
     } else {
       msgList = document.createElement("ul");
       msgList.setAttribute("id", "message");
-      msgList.setAttribute("aria-live", "polite");
-      msgList.tabIndex = "-1";
+      // msgList.tabIndex = "-1";
 
       for (let index = 0; index < errs.length; index++) {
         var li = document.createElement("li");
@@ -250,7 +254,6 @@ function displaySchedulePage() {
             const field = document.getElementById(id);
 
             if (field) {
-              field.focus();
               if (field.type === "text") {
                 field.setSelectionRange(field.value.length, field.value.length);
               }
@@ -261,10 +264,15 @@ function displaySchedulePage() {
         li.appendChild(anchor);
         msgList.appendChild(li);
       }
-      form.prepend(msgList);
-      msgList.focus();
-    }
+      form.append(msgList);
+      form.removeAttribute("hidden")
+      form.ariaHidden = "false"
 
+      const firstErrLink = msgList.querySelector(".error-link")
+      if(firstErrLink){
+        firstErrLink.focus()
+      }
+    }
   });
 }
 
