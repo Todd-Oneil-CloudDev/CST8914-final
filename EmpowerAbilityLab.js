@@ -152,11 +152,6 @@ function displaySchedulePage() {
   const main = displayPage("schedule");
   const submitBtn = main.querySelector("#submit-btn");
 
-  let checkboxes = document.querySelectorAll('.checkboxes [role="checkbox"]');
-  for (let i = 0; i < checkboxes.length; i++) {
-    new Checkbox(checkboxes[i]);
-  }
-
   // observer suggestion from copilot to modify base W3 JS code
   const inviteSpeaker = document.getElementById("speaker");
   const extraSection = document.getElementById("speaker-extra");
@@ -186,11 +181,16 @@ function displaySchedulePage() {
     const emailBlankErr = "Email field cannot be blank:";
     const emailFormatErr = "Email must be in the format of email@domain.com:";
 
+    nameField.removeAttribute("aria-invalid");
+    phoneField.removeAttribute("aria-invalid");
+    emailField.removeAttribute("aria-invalid");
+
     var errs = [];
     let msgList;
 
     if (nameField.value.trim().length === 0) {
-      errs.push(nameErr + ":" + nameField.id.toString())
+      errs.push(nameErr + ":" + nameField.id.toString());
+      nameField.setAttribute("aria-invalid", "true");
     }
 
     const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
@@ -198,17 +198,20 @@ function displaySchedulePage() {
 
     if (phoneValue.length > 0 && !phonePattern.test(phoneValue)) {
       errs.push(phoneErr + phoneField.id);
+      phoneField.setAttribute("aria-invalid", "true");
     }
 
     const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     const emailValue = emailField.value.trim();
 
     if (emailValue.length > 0 && !emailPattern.test(emailValue)) {
-      errs.push(emailFormatErr + emailField.id)
+      errs.push(emailFormatErr + emailField.id);
+      emailField.setAttribute("aria-invalid", "true");
     }
 
     if (emailValue.length === 0) {
       errs.push(emailBlankErr + emailField.id);
+      emailField.setAttribute("aria-invalid", "true");
     }
 
     // get form section
@@ -220,6 +223,7 @@ function displaySchedulePage() {
       msgList.innerHTML = "Thank you, we'll be in touch soon!";
       msgList.setAttribute("id", "message");
       msgList.setAttribute("aria-live", "polite");
+      msgList.classList.add("success-message");
 
       form.prepend(msgList);
     } else {
@@ -227,6 +231,7 @@ function displaySchedulePage() {
       msgList.setAttribute("id", "message");
       msgList.setAttribute("aria-live", "polite");
       msgList.tabIndex = "-1";
+      msgList.classList.add("error-message");
 
       for (let index = 0; index < errs.length; index++) {
         var li = document.createElement("li");
@@ -254,6 +259,20 @@ function displaySchedulePage() {
               if (field.type === "text") {
                 field.setSelectionRange(field.value.length, field.value.length);
               }
+            }
+          }
+        });
+
+        anchor.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          const id = e.currentTarget.dataset.target;
+          const field = document.getElementById(id);
+
+          if (field) {
+            field.focus();
+            if (field.type === "text") {
+              field.setSelectionRange(field.value.length, field.value.length);
             }
           }
         });

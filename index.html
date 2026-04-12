@@ -33,7 +33,7 @@
       <div class="container">
         <!-- Your Logo -->
         <a class="navbar-brand" href="/home"><img src="./images/logo.png"
-            alt="EmpowerAbilityLab Logo"
+            alt=""
             style="height: 65px; width: auto;">Empower Ability Labs
         </a>
 
@@ -119,12 +119,6 @@
             <button id="closeModal">Close</button>
           </div>
         </div>
-        <div class="col-md-4">
-          <p>
-            Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-            tellus ac cursus commodo.
-          </p>
-        </div>
 
         <section class="container mt-4"
           aria-labelledby="community-section-title">
@@ -136,7 +130,7 @@
             <!-- Card 1 -->
             <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
               <article class="card h-100 border-0 shadow-none">
-                <div class="card-body">
+                <div class="card-body d-flex flex-column">
                   <h3 class="card-title">Our Approach</h3>
                   <p class="card-text">
                     Empower Ability Labs utilizes a hands-on approach to raise
@@ -147,7 +141,7 @@
                     the world from their perspective.
                   </p>
                   <a href="https://www.google.com/search/howsearchworks/our-approach/"
-                    class="btn btn-link"
+                    class="btn btn-link mt-auto"
                     aria-label="Learn more about our approach">
                     Learn more
                   </a>
@@ -158,7 +152,7 @@
             <!-- Card 2 -->
             <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
               <article class="card h-100 border-0 shadow-none">
-                <div class="card-body">
+                <div class="card-body d-flex flex-column">
                   <h3 class="card-title">Services</h3>
                   <p class="card-text">
                     Promote accessibility awareness and enhance the user
@@ -170,7 +164,7 @@
                     <li>Inspirational speakers.</li>
                   </ul>
                   <a href="https://www.elevenways.be/en/services"
-                    class="btn btn-link" aria-label="Learn more about services">
+                    class="btn btn-link mt-auto" aria-label="Learn more about services">
                     Learn more
                   </a>
                 </div>
@@ -180,7 +174,7 @@
             <!-- Card 3 -->
             <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
               <article class="card h-100 border-0 shadow-none">
-                <div class="card-body">
+                <div class="card-body d-flex flex-column">
                   <h3 class="card-title">Testimonials</h3>
                   <p class="card-text">
                     Invite a speaker with disabilities to share their unique
@@ -189,7 +183,7 @@
                     enrich your team's understanding of inclusion.
                   </p>
                   <a href="https://dictionary.cambridge.org/us/dictionary/english/testimonial"
-                    class="btn btn-link"
+                    class="btn btn-link mt-auto"
                     aria-label="Learn more about testimonials">
                     Learn more
                   </a>
@@ -336,7 +330,7 @@
               </fieldset>
 
               <div id="speaker-extra" hidden>
-                <h2>Tell us about your event</h2>
+                <label for="event-descr">Tell us about your event</label>
                 <textarea name="event-description" id="event-descr"></textarea>
               </div>
 
@@ -354,7 +348,7 @@
                   <span class="off" aria-hidden="true"> No </span>
                 </span>
               </label>
-              <button id="submit-btn" class="btn">Schedule a
+              <button id="submit-btn" class="btn" type="submit">Schedule a
                 call</button>
             </form>
           </article>
