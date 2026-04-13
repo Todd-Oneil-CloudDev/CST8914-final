@@ -320,18 +320,15 @@ function displaySchedulePage() {
   })
 }
 
-page("/home", () => displayHomePage());
-page("/services", () => displayPage("services"));
-page("/schedule", () => displaySchedulePage());
-
 // Start on the home page
 // ROUTES
-page("/home", () => displayPage("home"));
+page("/home", () => displayHomePage());
 page("/services", () => displayPage("services"));
 page("/schedule", () => displayPage("schedule"));
 
 // DEFAULT
 page("/", () => page.redirect("/home"));
+page("/CST8914-final", () => page.redirect("/home"));
 page("/index.html", () => page.redirect("/home"));
 
 // Initialize router
