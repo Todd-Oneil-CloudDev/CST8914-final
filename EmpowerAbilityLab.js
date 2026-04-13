@@ -324,7 +324,7 @@ function displaySchedulePage() {
 // ROUTES
 page("/home", () => displayHomePage());
 page("/services", () => displayPage("services"));
-page("/schedule", () => displayPage("schedule"));
+page("/schedule", () => displaySchedulePage());
 
 // DEFAULT
 page("/", () => page.redirect("/home"));
